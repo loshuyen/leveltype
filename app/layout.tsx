@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "A website that can help improve your language listening skills by listening to videos/podcasts and typing transcripts.",
 };
 
-export default function RootLayout({
+export default function GlobalLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

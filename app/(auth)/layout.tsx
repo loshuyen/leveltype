@@ -1,6 +1,10 @@
 import React from 'react'
 
-const AuthLayout = ({children}) => {
+const AuthLayout = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
   return (
     <>
       {children}
