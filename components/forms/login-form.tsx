@@ -10,11 +10,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { signIn, providerMap } from "@/auth"
 
 export function LoginForm({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div">,
+searchParams: { callbackUrl: string | undefined }) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -25,8 +27,8 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
-            <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6">
+            <form>
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -36,6 +38,7 @@ export function LoginForm({
                   required
                 />
               </div>
+              
               <div className="grid gap-3">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
@@ -48,8 +51,9 @@ export function LoginForm({
                 </div>
                 <Input id="password" type="password" required />
               </div>
+              
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full mt-5">
                   登入
                 </Button>
                 <div className="flex items-center gap-4">
@@ -57,18 +61,38 @@ export function LoginForm({
                   <span className="text-muted-foreground">或者</span>
                   <Separator className="flex-1" />
                 </div>
-                <Button variant="outline" className="w-full">
-                  用 Google 帳號登入
-                </Button>
               </div>
-            </div>
+            </form>
+            {providerMap.map((provider) => (
+              <form 
+                key={provider.id}
+                action={async () => {
+                  "use server"
+                  await signIn(
+                    provider.id, {
+                    redirectTo: searchParams?.callbackUrl ?? "",
+                  })
+                }}
+              >
+                <Button
+                  type="submit"
+                  variant="outline"
+                  className="w-full"
+                >
+                  用 {provider.name} 登入
+                </Button>
+              </form>
+            ))}
+          </div>
+            
             <div className="mt-4 text-center text-sm">
               還沒有帳號?{" "}
               <a href="/sign-up" className="underline underline-offset-4">
                 立即註冊
               </a>
             </div>
-          </form>
+
+          
         </CardContent>
       </Card>
     </div>
