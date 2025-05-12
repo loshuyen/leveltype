@@ -7,8 +7,12 @@ export default function RootLayout({
   }) {
   return (
     <>
-    <Navbar />
-    {children}
+      <Navbar />
+      <main>
+        <section className='max-w-[1260px] mx-auto p-5 flex flex-col items-center justify-center'>
+          {children}
+        </section>
+      </main>
     </>
   );
 }
