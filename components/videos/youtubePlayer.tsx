@@ -1,0 +1,243 @@
+"use client";
+
+import React, { useEffect } from "react";
+import YouTube, { YouTubeProps } from "react-youtube";
+import Sentence from "@/components/videos/sentence";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Play, SkipForward, SkipBack, Pause } from "lucide-react";
+
+const YoutubePlayer = ({ transcript, videoId }) => {
+  const playerRef = React.useRef<any>(null);
+  const loopingRef = React.useRef<boolean>(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const sentenceRefs = React.useRef<(HTMLDivElement | null)[]>([]);
+  const [activeTranscriptIndex, setActiveTranscriptIndex] = React.useState<
+    number | null
+  >(null);
+  const [isLooping, setIsLooping] = React.useState(false);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  useEffect(() => {
+    loopingRef.current = isLooping;
+  }, [isLooping]);
+
+  useEffect(() => {
+    if (!containerRef.current || activeTranscriptIndex === null) return;
+
+    const container = containerRef.current;
+    const activeElement = sentenceRefs.current[activeTranscriptIndex];
+
+    if (activeElement) {
+      const containerRect = container.getBoundingClientRect();
+      const activeRect = activeElement.getBoundingClientRect();
+
+      const isVisible =
+        activeRect.top >= containerRect.top &&
+        activeRect.bottom <= containerRect.bottom;
+
+      if (!isVisible) {
+        container.scrollTo({
+          top: activeElement.offsetTop - container.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [activeTranscriptIndex]);
+
+  const onStateChange: YouTubeProps["onStateChange"] = (event) => {
+    if (event.data === 1) {
+      setIsPlaying(true);
+      monitorTime();
+    } else {
+      setIsPlaying(false);
+    }
+  };
+
+  const onPlayerReady: YouTubeProps["onReady"] = (event) => {
+    playerRef.current = event.target;
+  };
+
+  const opts: YouTubeProps["opts"] = {
+    playerVars: {
+      autoplay: 0,
+    },
+  };
+
+  const monitorTime = () => {
+    if (!playerRef.current) return;
+
+    const checkTime = () => {
+      if (!playerRef.current) return;
+
+      const currentTime = playerRef.current.getCurrentTime();
+      const currentTranscriptIndex = transcript.findIndex(
+        (t) => currentTime >= t.start && currentTime < t.end
+      );
+
+      if (currentTranscriptIndex !== -1) {
+        setActiveTranscriptIndex(currentTranscriptIndex);
+
+        if (
+          loopingRef.current &&
+          Math.abs(currentTime - transcript[currentTranscriptIndex].end) < 0.1
+        ) {
+          playerRef.current.seekTo(transcript[currentTranscriptIndex].start);
+        }
+      } else {
+        setActiveTranscriptIndex(null);
+      }
+
+      if (playerRef.current.getPlayerState() === 1) {
+        requestAnimationFrame(checkTime);
+      }
+    };
+
+    requestAnimationFrame(checkTime);
+  };
+
+  const playSegment = (TranscriptIndex: number) => {
+    if (!playerRef.current) return;
+    
+    if (activeTranscriptIndex === TranscriptIndex &&  isPlaying) {
+      playerRef.current.pauseVideo();
+    } else {
+        setActiveTranscriptIndex(TranscriptIndex);
+        playerRef.current.seekTo(transcript[TranscriptIndex].start);
+      playerRef.current.playVideo();
+    }
+  };
+
+  const togglePlayPause = () => {
+    if (!playerRef.current) return;
+
+    if (isPlaying) {
+      playerRef.current.pauseVideo();
+    } else {
+      playerRef.current.playVideo();
+    }
+  };
+
+  const handlePlayForward = () => {
+    if (
+      activeTranscriptIndex === null ||
+      activeTranscriptIndex === transcript.length - 1
+    ) {
+      playSegment(0);
+    } else {
+      playSegment(activeTranscriptIndex + 1);
+    }
+  };
+
+  const handlePlayBackward = () => {
+    if (activeTranscriptIndex === null || activeTranscriptIndex === 0) {
+      playSegment(0);
+    } else {
+      playSegment(activeTranscriptIndex - 1);
+    }
+  };
+
+  const changePlaybackRate = (rate: string) => {
+    if (playerRef.current) {
+      playerRef.current.setPlaybackRate(Number(rate));
+    }
+  };
+
+  return (
+    <div className="w-full p-4 flex flex-col lg:flex-row gap-4">
+      <div className="w-full lg:w-[50%]">
+        <YouTube
+          videoId={videoId}
+          opts={opts}
+          onReady={onPlayerReady}
+          iframeClassName="w-full aspect-video"
+          onStateChange={onStateChange}
+        />
+        <div className="w-full h-20 flex">
+          <div className="flex flex-1 items-center">
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="looping-mode"
+                checked={isLooping}
+                onCheckedChange={setIsLooping}
+              />
+              <Label htmlFor="looping-mode">單句重複播放</Label>
+            </div>
+          </div>
+          <div className="flex flex-1 justify-center items-center gap-5">
+            <Button
+              variant="ghost"
+              className="rounded-full"
+              size="icon"
+              onClick={handlePlayBackward}
+            >
+              <SkipBack fill="current" />
+            </Button>
+            <Button
+              variant="ghost"
+              className="rounded-full"
+              size="icon"
+              onClick={togglePlayPause}
+            >
+              {isPlaying ? <Pause fill="current" /> : <Play fill="current" />}
+            </Button>
+            <Button
+              variant="ghost"
+              className="rounded-full"
+              size="icon"
+              onClick={handlePlayForward}
+            >
+              <SkipForward fill="current" />
+            </Button>
+          </div>
+          <div className="flex-1 flex justify-end items-center font-semibold">
+            <Select onValueChange={changePlaybackRate} defaultValue="1">
+              <SelectTrigger className="w-min">
+                <SelectValue placeholder="Theme" />
+              </SelectTrigger>
+              <SelectContent className="font-semibold">
+                <SelectItem value="0.25">0.25x</SelectItem>
+                <SelectItem value="0.5">0.5x</SelectItem>
+                <SelectItem value="0.75">0.75x</SelectItem>
+                <SelectItem value="1">1x</SelectItem>
+                <SelectItem value="1.25">1.25x</SelectItem>
+                <SelectItem value="1.5">1.5x</SelectItem>
+                <SelectItem value="2">2x</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+      <div
+        className="w-full lg:w-[50%] max-h-[511px] overflow-auto divide-y divide-gray-300 border-gray-300 border-[1px]"
+        ref={containerRef}
+      >
+        {transcript.map((t, index) => (
+          <Sentence
+            transcript={t}
+            key={index}
+            index={index}
+            handlePlayClick={() => {
+              playSegment(index);
+            }}
+            isActive={activeTranscriptIndex === index}
+            ref={(node) => {
+              sentenceRefs.current[index] = node;
+            }}
+            isPlaying={isPlaying}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default YoutubePlayer;

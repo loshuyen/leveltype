@@ -175,6 +175,8 @@ const theDailyShowVideos = [
   }
 ];
 
+export const allVideos = kurzgesagtVideos.concat(tedEdVideos).concat(theDailyShowVideos);
+
 export const youtubeSources = [
   {
     channel: "Kurzgesagt – In a Nutshell",
