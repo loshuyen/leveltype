@@ -1,193 +1,252 @@
-const kurzgesagtVideos = [
+const youtubeSources = [
   {
-    title: "Why Your Brain Blinds You For 2 Hours Every Day",
-    id: "wo_e0EvEZn8",
-    link: "https://www.youtube.com/watch?v=wo_e0EvEZn8",
-    thumbnail: "https://i.ytimg.com/vi/wo_e0EvEZn8/hqdefault.jpg",
+    "channel": "TED-Ed",
+    "videos": [
+      {
+        "id": "eMRtxsj29aQ",
+        "title": "Would you eat a ghost pepper for a prize? - Dan Kwartler",
+        "thumbnail": "https://i.ytimg.com/vi/eMRtxsj29aQ/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=eMRtxsj29aQ"
+      },
+      {
+        "id": "2fyX600dL2g",
+        "title": "The trillion dollar paradox - George Zaidan",
+        "thumbnail": "https://i.ytimg.com/vi/2fyX600dL2g/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=2fyX600dL2g"
+      },
+      {
+        "id": "dJoBnnCTP5M",
+        "title": "The ethical dilemma of deathbed wishes - Sarah Stroud and Michael Vazquez",
+        "thumbnail": "https://i.ytimg.com/vi/dJoBnnCTP5M/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=dJoBnnCTP5M"
+      },
+      {
+        "id": "0pF6ZLCxceM",
+        "title": "Can you survive a Komodo dragon bite? - Achmad Ariefiandy",
+        "thumbnail": "https://i.ytimg.com/vi/0pF6ZLCxceM/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=0pF6ZLCxceM"
+      },
+      {
+        "id": "vOBjtotp-Gw",
+        "title": "How much does it cost to fly private? - Rachel Yang",
+        "thumbnail": "https://i.ytimg.com/vi/vOBjtotp-Gw/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=vOBjtotp-Gw"
+      },
+      {
+        "id": "YYpy0cM-GSE",
+        "title": "The clever trick used by sports betting apps - Shannon Odell",
+        "thumbnail": "https://i.ytimg.com/vi/YYpy0cM-GSE/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=YYpy0cM-GSE"
+      },
+      {
+        "id": "7u98x3_r4_A",
+        "title": "One of the animal kingdom\u2019s strangest relationships - Niko Zlotnik",
+        "thumbnail": "https://i.ytimg.com/vi/7u98x3_r4_A/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=7u98x3_r4_A"
+      },
+      {
+        "id": "vRyoEoyXCEU",
+        "title": "What caused the fall of one of the most influential empires in history? - Mostafa Minawi",
+        "thumbnail": "https://i.ytimg.com/vi/vRyoEoyXCEU/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=vRyoEoyXCEU"
+      },
+      {
+        "id": "O18-FA83BaM",
+        "title": "The myth of Medusa - Laura Aitken-Burt",
+        "thumbnail": "https://i.ytimg.com/vi/O18-FA83BaM/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=O18-FA83BaM"
+      },
+      {
+        "id": "SzC11Ce-ID8",
+        "title": "We made you something special and unprecedented",
+        "thumbnail": "https://i.ytimg.com/vi/SzC11Ce-ID8/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=SzC11Ce-ID8"
+      }
+    ]
   },
   {
-    title: "We Fell For The Oldest Lie On The Internet",
-    id: "bgo7rm5Maqg",
-    link: "https://www.youtube.com/watch?v=bgo7rm5Maqg",
-    thumbnail: "https://i.ytimg.com/vi/bgo7rm5Maqg/hqdefault.jpg",
+    "channel": "The New York Times",
+    "videos": [
+      {
+        "id": "IXR9PByA9SY",
+        "title": "We\u2019re Experts in Fascism. We\u2019re Leaving the U.S. | NYT Opinion",
+        "thumbnail": "https://i.ytimg.com/vi/IXR9PByA9SY/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=IXR9PByA9SY"
+      },
+      {
+        "id": "WFv51crw1ms",
+        "title": "My Unexpected Answer to Balancing Work and Kids | NYT Opinion",
+        "thumbnail": "https://i.ytimg.com/vi/WFv51crw1ms/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=WFv51crw1ms"
+      },
+      {
+        "id": "GupyEudjdNw",
+        "title": "They Were the Original DOGE. Then Trump Fired Them. | NYT Opinion",
+        "thumbnail": "https://i.ytimg.com/vi/GupyEudjdNw/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=GupyEudjdNw"
+      },
+      {
+        "id": "eTWokdI6Mvo",
+        "title": "Democrats: A Foolproof-ish Guide for the Resistance | NYT Opinion",
+        "thumbnail": "https://i.ytimg.com/vi/eTWokdI6Mvo/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=eTWokdI6Mvo"
+      },
+      {
+        "id": "bLWLb0RM7HQ",
+        "title": "Germany\u2019s Far-Right Comeback | NYT Opinion",
+        "thumbnail": "https://i.ytimg.com/vi/bLWLb0RM7HQ/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=bLWLb0RM7HQ"
+      },
+      {
+        "id": "1Hz19kpCse4",
+        "title": "Can A.I. Voice 'The Simpsons'? We Found Out. | NYT Opinion",
+        "thumbnail": "https://i.ytimg.com/vi/1Hz19kpCse4/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=1Hz19kpCse4"
+      },
+      {
+        "id": "X_D-yW8v0Jo",
+        "title": "The First Signs of Tyranny, From People Who Missed Them | NYT Opinion",
+        "thumbnail": "https://i.ytimg.com/vi/X_D-yW8v0Jo/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=X_D-yW8v0Jo"
+      },
+      {
+        "id": "fS1yF6nsEB0",
+        "title": "Sean Spicer on Trump 2.0: \u2018It\u2019s Going to Be Cataclysmic\u2019 | NYT Opinion",
+        "thumbnail": "https://i.ytimg.com/vi/fS1yF6nsEB0/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=fS1yF6nsEB0"
+      }
+    ]
   },
   {
-    title: "Is The World Getting More Violent?",
-    id: "reSfF60-2S4",
-    link: "https://www.youtube.com/watch?v=reSfF60-2S4",
-    thumbnail: "https://i.ytimg.com/vi/reSfF60-2S4/hqdefault.jpg",
+    "channel": "Sprouts",
+    "videos": [
+      {
+        "id": "tkm0TNFzIeg",
+        "title": "The Feynman Technique",
+        "thumbnail": "https://i.ytimg.com/vi/tkm0TNFzIeg/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=tkm0TNFzIeg"
+      },
+      {
+        "id": "eVlvxHJdql8",
+        "title": "13 Study Tips: The Science of Better Learning",
+        "thumbnail": "https://i.ytimg.com/vi/eVlvxHJdql8/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=eVlvxHJdql8"
+      },
+      {
+        "id": "WTr12dK2Se0",
+        "title": "Focused vs Diffused Thinking: Solve Hard Problems with this Simple Trick",
+        "thumbnail": "https://i.ytimg.com/vi/WTr12dK2Se0/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=WTr12dK2Se0"
+      },
+      {
+        "id": "aF63HHVbpQ8",
+        "title": "Experiential Learning: How We All Learn Naturally",
+        "thumbnail": "https://i.ytimg.com/vi/aF63HHVbpQ8/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=aF63HHVbpQ8"
+      },
+      {
+        "id": "yS2gCgjSq3U",
+        "title": "Process-Oriented Learning: The Way To Reach Excellence",
+        "thumbnail": "https://i.ytimg.com/vi/yS2gCgjSq3U/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=yS2gCgjSq3U"
+      },
+      {
+        "id": "FYlzJc8aaC0",
+        "title": "That\u2019s How You Learn a New Language: 7 Effective Methods",
+        "thumbnail": "https://i.ytimg.com/vi/FYlzJc8aaC0/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=FYlzJc8aaC0"
+      },
+      {
+        "id": "D64TZ-wcLCY",
+        "title": "Exam Anxiety: The Science of Learning and Fear",
+        "thumbnail": "https://i.ytimg.com/vi/D64TZ-wcLCY/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=D64TZ-wcLCY"
+      },
+      {
+        "id": "hydCdGLAh00",
+        "title": "Chunking: Learning Technique for Better Memory",
+        "thumbnail": "https://i.ytimg.com/vi/hydCdGLAh00/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=hydCdGLAh00"
+      },
+      {
+        "id": "JawhTCCbVZM",
+        "title": "What Science Knows About Learning with Passion",
+        "thumbnail": "https://i.ytimg.com/vi/JawhTCCbVZM/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=JawhTCCbVZM"
+      },
+      {
+        "id": "1-sjUoGO250",
+        "title": "Deliberate Practice: Achieve Mastery in Anything",
+        "thumbnail": "https://i.ytimg.com/vi/1-sjUoGO250/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=1-sjUoGO250"
+      }
+    ]
   },
   {
-    title: "We Need to Rethink Exercise (Updated Version)",
-    id: "vSSkDos2hzo",
-    link: "https://www.youtube.com/watch?v=vSSkDos2hzo",
-    thumbnail: "https://i.ytimg.com/vi/vSSkDos2hzo/hqdefault.jpg",
-  },
-  {
-    title: "There Is Life Hiding Inside Earth",
-    id: "VD6xJq8NguY",
-    link: "https://www.youtube.com/watch?v=VD6xJq8NguY",
-    thumbnail: "https://i.ytimg.com/vi/VD6xJq8NguY/hqdefault.jpg",
-  },
-  {
-    title: "Tired of Doomscrolling?",
-    id: "c1nYtX-NUsc",
-    link: "https://www.youtube.com/watch?v=c1nYtX-NUsc",
-    thumbnail: "https://i.ytimg.com/vi/c1nYtX-NUsc/hqdefault.jpg",
-  },
-  {
-    title: "We Traveled Back in Time. Now Physicists Are Angry.",
-    id: "dBxxi5XAm3U",
-    link: "https://www.youtube.com/watch?v=dBxxi5XAm3U",
-    thumbnail: "https://i.ytimg.com/vi/dBxxi5XAm3U/hqdefault.jpg",
-  },
-  {
-    title: "If You Eat Meat You Should Know This",
-    id: "5sVfTPaxRwk",
-    link: "https://www.youtube.com/watch?v=5sVfTPaxRwk",
-    thumbnail: "https://i.ytimg.com/vi/5sVfTPaxRwk/hqdefault.jpg",
-  },
-  {
-    title: "We Finally Answered The MOST Important Question",
-    id: "tRXy-b6_lBc",
-    link: "https://www.youtube.com/watch?v=tRXy-b6_lBc",
-    thumbnail: "https://i.ytimg.com/vi/tRXy-b6_lBc/hqdefault.jpg",
-  },
-  {
-    title: "Your Time Machine Broke - At The Worst Time In History",
-    id: "NYNBAxDfgrY",
-    link: "https://www.youtube.com/watch?v=NYNBAxDfgrY",
-    thumbnail: "https://i.ytimg.com/vi/NYNBAxDfgrY/hqdefault.jpg",
-  },
-];
-
-const tedEdVideos = [
-  {
-    title: "What Earth in 2125 could look like - Iseult Gillespie",
-    id: "4UJTtk_2ly0",
-    link: "https://www.youtube.com/watch?v=4UJTtk_2ly0",
-    thumbnail: "https://i.ytimg.com/vi/4UJTtk_2ly0/hqdefault.jpg",
-  },
-  {
-    title: "How to make smart decisions more easily",
-    id: "X7j8F16eSqs",
-    link: "https://www.youtube.com/watch?v=X7j8F16eSqs",
-    thumbnail: "https://i.ytimg.com/vi/X7j8F16eSqs/hqdefault.jpg",
-  },
-  {
-    title: "3 tips on how to study effectively",
-    id: "TjPFZaMe2yw",
-    link: "https://www.youtube.com/watch?v=TjPFZaMe2yw",
-    thumbnail: "https://i.ytimg.com/vi/TjPFZaMe2yw/hqdefault.jpg",
-  },
-  {
-    title: "Questions No One Knows the Answers to (Full Version)",
-    id: "7SWvDHvWXok",
-    link: "https://www.youtube.com/watch?v=7SWvDHvWXok",
-    thumbnail: "https://i.ytimg.com/vi/7SWvDHvWXok/hqdefault.jpg",
-  },
-  {
-    title: "Introducing TED-Ed: Lessons Worth Sharing",
-    id: "FfJ5XG5i2aw",
-    link: "https://www.youtube.com/watch?v=FfJ5XG5i2aw",
-    thumbnail: "https://i.ytimg.com/vi/FfJ5XG5i2aw/hqdefault.jpg",
-  },
-  {
-    title: "Why are cats so weird?",
-    id: "Pk7yqlTMvp8",
-    link: "https://www.youtube.com/watch?v=Pk7yqlTMvp8",
-    thumbnail: "https://i.ytimg.com/vi/Pk7yqlTMvp8/hqdefault.jpg",
-  },
-  {
-    title: "How playing an instrument benefits your brain",
-    id: "R0JKCYZ8hng",
-    link: "https://www.youtube.com/watch?v=R0JKCYZ8hng",
-    thumbnail: "https://i.ytimg.com/vi/R0JKCYZ8hng/hqdefault.jpg",
-  },
-  {
-    title: "What would happen if you didn't sleep?",
-    id: "dqONk48l5vY",
-    link: "https://www.youtube.com/watch?v=dqONk48l5vY",
-    thumbnail: "https://i.ytimg.com/vi/dqONk48l5vY/hqdefault.jpg",
-  },
-];
-
-const theDailyShowVideos = [
-  {
-    title: 'Trump Renames Persian Gulf, Teases a “Big Announcement” & Loses Another Fighter Jet | The Daily Show',
-    id: '-emRpGyLca0',
-    link: 'https://www.youtube.com/watch?v=-emRpGyLca0',
-    thumbnail: 'https://i.ytimg.com/vi/-emRpGyLca0/hqdefault.jpg'
-  },
-  {
-    title: 'John Green - “Everything Is Tuberculosis” | The Daily Show',
-    id: '2uppLo4lZRc',
-    link: 'https://www.youtube.com/watch?v=2uppLo4lZRc',
-    thumbnail: 'https://i.ytimg.com/vi/2uppLo4lZRc/hqdefault.jpg'
-  },
-  {
-    title: 'Canada PM Carney Friend-Zones Trump & Real ID Now Required for Air Travel | The Daily Show',
-    id: 'ds9STWby21Y',
-    link: 'https://www.youtube.com/watch?v=ds9STWby21Y',
-    thumbnail: 'https://i.ytimg.com/vi/ds9STWby21Y/hqdefault.jpg'
-  },
-  {
-    title: 'Trump on Upholding Constitution: “I Don\'t Know” | The Daily Show',
-    id: '7MPBf6GEDYs',
-    link: 'https://www.youtube.com/watch?v=7MPBf6GEDYs',
-    thumbnail: 'https://i.ytimg.com/vi/7MPBf6GEDYs/hqdefault.jpg'
-  },
-  {
-    title: 'Jordan Klepper Teases His Next MAGA Journey | The Daily Show',
-    id: '48_Zq8SUoKg',
-    link: 'https://www.youtube.com/watch?v=48_Zq8SUoKg',
-    thumbnail: 'https://i.ytimg.com/vi/48_Zq8SUoKg/hqdefault.jpg'
-  },
-  {
-    title: 'Mike Waltz Leaves the Group Chat for a U.N. One & Trump\'s Town Hall | The Daily Show',
-    id: 'pLwbO8Ix9Gc',
-    link: 'https://www.youtube.com/watch?v=pLwbO8Ix9Gc',
-    thumbnail: 'https://i.ytimg.com/vi/pLwbO8Ix9Gc/hqdefault.jpg'
-  },
-  {
-    title: 'The Daily Show - Jon on Trump\'s First 100 Days',
-    id: 'wYS70hxsPME',
-    link: 'https://www.youtube.com/watch?v=wYS70hxsPME',
-    thumbnail: 'https://i.ytimg.com/vi/wYS70hxsPME/hqdefault.jpg'
-  },
-  {
-    title: '"We Can Do Hard Things" A Guidebook | The Daily Show',
-    id: 'Fb7vWykrhNg',
-    link: 'https://www.youtube.com/watch?v=Fb7vWykrhNg',
-    thumbnail: 'https://i.ytimg.com/vi/Fb7vWykrhNg/hqdefault.jpg'
-  },
-  {
-    title: 'Jon Stewart on Kilmar Abrego Garcia\'s Deportation and How Trump\'s Policies Affect Immigrants | The Daily Show',
-    id: 'OZbCyBMfy2c',
-    link: 'https://www.youtube.com/watch?v=OZbCyBMfy2c',
-    thumbnail: 'https://i.ytimg.com/vi/OZbCyBMfy2c/hqdefault.jpg'
-  },
-  {
-    title: 'It\'s Liberation Day! | The Daily Show | Comedy Central Africa',
-    id: 'ylbC73zlxPY',
-    link: 'https://www.youtube.com/watch?v=ylbC73zlxPY',
-    thumbnail: 'https://i.ytimg.com/vi/ylbC73zlxPY/hqdefault.jpg'
+    "channel": "BBC Learning English",
+    "videos": [
+      {
+        "id": "we4KiShNjlA",
+        "title": "Improving your memory \u23f2\ufe0f 6 Minute English",
+        "thumbnail": "https://i.ytimg.com/vi/we4KiShNjlA/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=we4KiShNjlA"
+      },
+      {
+        "id": "26PrgjTboVQ",
+        "title": "Are you following your dreams? \u23f2\ufe0f 6 Minute English",
+        "thumbnail": "https://i.ytimg.com/vi/26PrgjTboVQ/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=26PrgjTboVQ"
+      },
+      {
+        "id": "2USh8OmgiJE",
+        "title": "Why do young people feel so lonely? 6 Minute English",
+        "thumbnail": "https://i.ytimg.com/vi/2USh8OmgiJE/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=2USh8OmgiJE"
+      },
+      {
+        "id": "Y681hXWwhQY",
+        "title": "The benefits of doing nothing \u23f2\ufe0f 6 Minute English",
+        "thumbnail": "https://i.ytimg.com/vi/Y681hXWwhQY/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=Y681hXWwhQY"
+      },
+      {
+        "id": "wkjSBC-_bDA",
+        "title": "How do you learn to speak a language? 6 Minute English",
+        "thumbnail": "https://i.ytimg.com/vi/wkjSBC-_bDA/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=wkjSBC-_bDA"
+      },
+      {
+        "id": "FZDImEiPgMk",
+        "title": "Feed your brain \u23f2\ufe0f 6 Minute English",
+        "thumbnail": "https://i.ytimg.com/vi/FZDImEiPgMk/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=FZDImEiPgMk"
+      },
+      {
+        "id": "g8q-Nq-ajx8",
+        "title": "Social media and teenage health \u23f2\ufe0f 6 Minute English",
+        "thumbnail": "https://i.ytimg.com/vi/g8q-Nq-ajx8/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=g8q-Nq-ajx8"
+      },
+      {
+        "id": "1iHeeMlOsyc",
+        "title": "Why we forget the things we learn - 6 Minute English",
+        "thumbnail": "https://i.ytimg.com/vi/1iHeeMlOsyc/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=1iHeeMlOsyc"
+      },
+      {
+        "id": "HZd53TJpmoQ",
+        "title": "What to do when you can't sleep - 6 Minute English",
+        "thumbnail": "https://i.ytimg.com/vi/HZd53TJpmoQ/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=HZd53TJpmoQ"
+      },
+      {
+        "id": "JjESWHykTJQ",
+        "title": "What makes you happy? 6 Minute English",
+        "thumbnail": "https://i.ytimg.com/vi/JjESWHykTJQ/hqdefault.jpg",
+        "link": "https://www.youtube.com/watch?v=JjESWHykTJQ"
+      }
+    ]
   }
-];
-
-export const allVideos = kurzgesagtVideos.concat(tedEdVideos).concat(theDailyShowVideos);
-
-export const youtubeSources = [
-  {
-    channel: "Kurzgesagt – In a Nutshell",
-    videos: kurzgesagtVideos,
-  },
-  {
-    channel: "TED-Ed",
-    videos: tedEdVideos,
-  },
-  {
-    channel: "The Daily Show",
-    videos: theDailyShowVideos,
-  },
 ]
+
+export { youtubeSources };
