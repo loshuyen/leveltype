@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Play, SkipForward, SkipBack, Pause } from "lucide-react";
 
-const YoutubePlayer = ({ transcript, videoId }) => {
+const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email }) => {
   const playerRef = React.useRef<any>(null);
   const loopingRef = React.useRef<boolean>(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -222,6 +222,8 @@ const YoutubePlayer = ({ transcript, videoId }) => {
       >
         {transcript.map((t, index) => (
           <Sentence
+            videoId={videoId}
+            email={email}
             transcript={t}
             key={index}
             index={index}
@@ -233,6 +235,8 @@ const YoutubePlayer = ({ transcript, videoId }) => {
               sentenceRefs.current[index] = node;
             }}
             isPlaying={isPlaying}
+            input={input ? JSON.parse(input) : ""}
+            handleUpdateInput={upsertInput}
           />
         ))}
       </div>

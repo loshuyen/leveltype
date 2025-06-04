@@ -1,13 +1,20 @@
-import React from "react";
+import React, { startTransition } from "react";
 import WordDiff from "./diff";
 import { Button } from "@/components/ui/button";
 import { PlayCircle, PauseCircle, EyeIcon, EyeOffIcon } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 
-const Sentence = ({ transcript, index, handlePlayClick, isActive, ref, isPlaying }) => {
+const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive, ref, isPlaying, input, handleUpdateInput }) => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
-  const [inputText, setInputText] = React.useState("");
+  const [inputText, setInputText] = React.useState(input[index] || "");
   const [isVisible, setIsVisible] = React.useState(false);
+
+  const handleInputSubmit = () => {
+    startTransition(() => {
+      setInputText(inputRef.current?.value || "")
+      handleUpdateInput(videoId, email, index, inputRef.current?.value || "");
+    })
+  };
 
   return (
     <div
@@ -36,10 +43,17 @@ const Sentence = ({ transcript, index, handlePlayClick, isActive, ref, isPlaying
         <Textarea 
           className="font-semibold overflow-hidden resize-none min-h-0 h-auto" placeholder="Type here..." 
           ref={inputRef}
+          defaultValue={inputText}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleInputSubmit();
+            }
+          }}
         />
         <Button
           type="submit"
-          onClick={() => setInputText(inputRef.current?.value || "")}
+          onClick={handleInputSubmit}
         >
           {inputText ? "更新" : "提交"}
         </Button>
