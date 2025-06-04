@@ -17,6 +17,7 @@ export default async function VideoPage({ params }: { params: Promise<{ id: stri
       videoId={id} 
       input={input}
       upsertInput={upsertInput}
+      getInput={getInput}
     />
   );
 }
