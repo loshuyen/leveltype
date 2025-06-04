@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, startTransition } from "react";
 import YouTube, { YouTubeProps } from "react-youtube";
 import Sentence from "@/components/videos/sentence";
 import { Label } from "@/components/ui/label";
@@ -13,9 +13,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Progress } from "@/components/ui/progress"
 import { Play, SkipForward, SkipBack, Pause } from "lucide-react";
 
-const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email }) => {
+const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInput }) => {
   const playerRef = React.useRef<any>(null);
   const loopingRef = React.useRef<boolean>(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -25,6 +26,15 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email }) => {
   >(null);
   const [isLooping, setIsLooping] = React.useState(false);
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [inputCount, setInputCount] = React.useState(input ? Object.values(JSON.parse(input)).filter(value => value !== "").length : 0);
+
+  const updateInputCount = () => {
+    startTransition(async () => {
+      const input = await getInput(videoId, email ?? "");
+      const count = input ? Object.values(JSON.parse(input)).filter(value => value !== "").length : 0
+      setInputCount(count);
+    })
+  };
 
   useEffect(() => {
     loopingRef.current = isLooping;
@@ -161,7 +171,7 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email }) => {
           iframeClassName="w-full aspect-video"
           onStateChange={onStateChange}
         />
-        <div className="w-full h-20 flex">
+        <div className="w-full h-15 flex">
           <div className="flex flex-1 items-center">
             <div className="flex items-center space-x-2">
               <Switch
@@ -215,6 +225,9 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email }) => {
             </Select>
           </div>
         </div>
+        <div className="w-full h-5 flex justify-end items-center font-semibold text-sm">
+          練習進度 {`(${inputCount} / ${transcript.length})`}<Progress value={inputCount / transcript.length * 100} className="w-[20%] ml-3"/>
+        </div>
       </div>
       <div
         className="w-full lg:w-[50%] max-h-[511px] overflow-auto divide-y divide-gray-300 border-gray-300 border-[1px]"
@@ -237,6 +250,7 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email }) => {
             isPlaying={isPlaying}
             input={input ? JSON.parse(input) : ""}
             handleUpdateInput={upsertInput}
+            updateInputCount={updateInputCount}
           />
         ))}
       </div>

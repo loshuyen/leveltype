@@ -4,15 +4,16 @@ import { Button } from "@/components/ui/button";
 import { PlayCircle, PauseCircle, EyeIcon, EyeOffIcon } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 
-const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive, ref, isPlaying, input, handleUpdateInput }) => {
+const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive, ref, isPlaying, input, handleUpdateInput, updateInputCount }) => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const [inputText, setInputText] = React.useState(input[index] || "");
   const [isVisible, setIsVisible] = React.useState(false);
 
   const handleInputSubmit = () => {
-    startTransition(() => {
+    startTransition(async () => {
       setInputText(inputRef.current?.value || "")
-      handleUpdateInput(videoId, email, index, inputRef.current?.value || "");
+      await handleUpdateInput(videoId, email, index, inputRef.current?.value || "");
+      updateInputCount();
     })
   };
 
