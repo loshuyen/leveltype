@@ -39,3 +39,15 @@ export const getInput = async (videoId, email) => {
     const input = await Input.findOne({ videoId, user: user._id })
     return input ? input.text : ""
 }
+
+export const getInputRecordsByUser = async (email) => {
+    await dbConnect()
+
+    const user = await User.findOne({ email })
+
+    if (!user) return;
+
+    const input = await Input.find({ user: user._id })
+    const videoIds = input.map((i) => i.videoId)
+    return videoIds ?? []
+}

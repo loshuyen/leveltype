@@ -15,10 +15,15 @@ export default async function NavBar() {
         <Image src={"/logo.png"} alt="Logo" width={28} height={28} />
         <span className="ml-2 font-semibold text-xl">LevelType</span>
       </Link>
-      <div className="ml-auto flex gap-2">
+      <div className="ml-auto flex gap-5 items-center">
         {
           user ? (
-            <UserMenu user={user} />
+            <>
+              <Link href={routes.USER_VIDEOS}>
+                My videos
+              </Link>
+              <UserMenu user={user} />
+            </>
           ) : (
             <>
               <Button variant="outline" asChild>
