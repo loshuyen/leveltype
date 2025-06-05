@@ -17,7 +17,7 @@ import { Progress } from "@/components/ui/progress"
 import { Play, SkipForward, SkipBack, Pause } from "lucide-react";
 
 const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInput }) => {
-  const playerRef = React.useRef<any>(null);
+  const playerRef = React.useRef(null);
   const loopingRef = React.useRef<boolean>(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const sentenceRefs = React.useRef<(HTMLDivElement | null)[]>([]);
