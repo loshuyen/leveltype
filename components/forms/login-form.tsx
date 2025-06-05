@@ -12,11 +12,11 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { signIn, providerMap } from "@/auth"
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">,
-searchParams: { callbackUrl: string | undefined }) {
+type LoginFormProps = React.ComponentProps<"div"> & {
+  searchParams?: { callbackUrl?: string }
+}
+
+export function LoginForm({ className, searchParams, ...props }: LoginFormProps) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>

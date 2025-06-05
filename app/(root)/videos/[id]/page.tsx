@@ -6,9 +6,8 @@ import { getInput, upsertInput } from "@/actions/input";
 export default async function VideoPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const session = await auth();
-  const transcript = transcripts[id];
-
-  const input = await getInput(id, session?.user?.email ?? "");
+  const transcript = transcripts[id as keyof typeof transcripts];
+  const input = await getInput({videoId: id, email: session?.user?.email ?? ""});
 
   return (
     <YoutubePlayer 

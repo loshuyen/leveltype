@@ -4,9 +4,22 @@ import dbConnect from "@/lib/mongoose"
 import { Input } from "@/models/input"
 import { User } from "@/models/user"
 
-export const upsertInput = async (videoId: string, email: string, index: number, text: string) => {
+export type upsertInputParams = {
+    videoId: string;
+    email: string | null;
+    index: number;
+    text: string;
+}
+export type getInputParams = {
+    videoId: string;
+    email: string | null;
+}
+
+export const upsertInput = async ({ videoId, email, index, text }: upsertInputParams) => {
     await dbConnect()
     
+    if (!email) return;
+
     const user = await User.findOne({ email })
 
     if (!user) return;
@@ -19,7 +32,7 @@ export const upsertInput = async (videoId: string, email: string, index: number,
             videoId,
             user: user._id,
             text: inputText,
-    });
+        });
     } else {
         input.text = JSON.stringify({
             ...JSON.parse(input.text || "{}"),
@@ -29,8 +42,10 @@ export const upsertInput = async (videoId: string, email: string, index: number,
     }
 }
 
-export const getInput = async (videoId: string, email: string) => {
+export const getInput = async ({ videoId, email }: getInputParams) => {
     await dbConnect()
+
+    if (!email) return;
 
     const user = await User.findOne({ email })
 

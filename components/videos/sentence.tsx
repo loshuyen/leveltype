@@ -3,16 +3,33 @@ import WordDiff from "./diff";
 import { Button } from "@/components/ui/button";
 import { PlayCircle, PauseCircle, EyeIcon, EyeOffIcon } from "lucide-react";
 import { Textarea } from "../ui/textarea";
+import { upsertInputParams } from "@/actions/input";
 
-const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive, ref, isPlaying, input, handleUpdateInput, updateInputCount }) => {
+type SentenceProps = {
+  videoId: string;
+  email: string | null;
+  transcript: { text: string };
+  index: number;
+  handlePlayClick: () => void;
+  isActive: boolean;
+  ref?: React.Ref<HTMLDivElement>;
+  isPlaying: boolean;
+  input: string[];
+  handleUpdateInput: ({ videoId, email, index, text }: upsertInputParams) => Promise<void>;
+  updateInputCount: () => void;
+};
+
+const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive, ref, isPlaying, input, handleUpdateInput, updateInputCount }: SentenceProps
+) => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const [inputText, setInputText] = React.useState(input[index] || "");
   const [isVisible, setIsVisible] = React.useState(false);
 
   const handleInputSubmit = () => {
     startTransition(async () => {
-      setInputText(inputRef.current?.value || "")
-      await handleUpdateInput(videoId, email, index, inputRef.current?.value || "");
+      const text = inputRef.current?.value || "";
+      setInputText(text)
+      await handleUpdateInput({videoId, email, index, text});
       updateInputCount();
     })
   };

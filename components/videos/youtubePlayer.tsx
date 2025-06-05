@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, startTransition } from "react";
-import YouTube, { YouTubeProps } from "react-youtube";
+import YouTube, { YouTubeProps, YouTubePlayer } from "react-youtube";
 import Sentence from "@/components/videos/sentence";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -15,9 +15,24 @@ import {
 } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress"
 import { Play, SkipForward, SkipBack, Pause } from "lucide-react";
+import { upsertInputParams, getInputParams } from "@/actions/input";
 
-const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInput }) => {
-  const playerRef = React.useRef(null);
+type youtubePlayerProps = {
+  transcript: {
+    start: number;
+    end: number;
+    text: string;
+    duration: number;
+  }[];
+  videoId: string;
+  input: string | null;
+  upsertInput: ({ videoId, email, index, text }: upsertInputParams) => Promise<void>;
+  email: string | null;
+  getInput: ({ videoId, email }: getInputParams) => Promise<string>;
+};
+
+const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInput }: youtubePlayerProps) => {
+  const playerRef = React.useRef<YouTubePlayer | null>(null);
   const loopingRef = React.useRef<boolean>(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const sentenceRefs = React.useRef<(HTMLDivElement | null)[]>([]);
@@ -30,7 +45,7 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
 
   const updateInputCount = () => {
     startTransition(async () => {
-      const input = await getInput(videoId, email ?? "");
+      const input = await getInput({videoId, email});
       const count = input ? Object.values(JSON.parse(input)).filter(value => value !== "").length : 0
       setInputCount(count);
     })

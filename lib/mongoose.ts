@@ -1,7 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
+
+interface CachedMongoose {
+  conn: Mongoose | null;
+  promise: Promise<Mongoose> | null;
+}
 
 declare global {
-  var mongoose: any;
+  // eslint-disable-next-line no-var
+  var mongoose: CachedMongoose;
 }
 
 let cached = global.mongoose;
@@ -23,10 +29,7 @@ async function dbConnect() {
     return cached.conn;
   }
   if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI, {dbName: 'leveltype'}).then((mongoose) => {
       return mongoose;
     });
   }
@@ -36,7 +39,6 @@ async function dbConnect() {
     cached.promise = null;
     throw e;
   }
-
   return cached.conn;
 }
 

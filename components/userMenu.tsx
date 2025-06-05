@@ -12,7 +12,13 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { signOut } from "@/auth"
 
-const UserMenu = ({ user }) => {
+type User = {
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+};
+
+const UserMenu = ({ user }: {user: User}) => {
     return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
