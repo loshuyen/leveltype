@@ -34,7 +34,7 @@ export default async function NavBar() {
             <>
               <Button variant="ghost" asChild>
                 <Link href={routes.USER_VIDEOS}>
-                  My videos
+                  練習紀錄
                 </Link>
               </Button>
               <UserMenu user={user} />
@@ -68,7 +68,7 @@ export default async function NavBar() {
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem asChild>
-                      <Link href={routes.USER_VIDEOS}>My videos</Link>
+                      <Link href={routes.USER_VIDEOS}>練習紀錄</Link>
                     </DropdownMenuItem>
                     <ModeTogglerMobile />
                     <DropdownMenuSeparator />
@@ -81,7 +81,7 @@ export default async function NavBar() {
                       >
                         <LogOut />
                         <button type="submit">
-                          Sign Out
+                          登出
                         </button>
                       </form>
                     </DropdownMenuItem>

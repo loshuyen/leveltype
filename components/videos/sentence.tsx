@@ -5,6 +5,7 @@ import { PlayCircle, PauseCircle, EyeIcon, EyeOffIcon } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { upsertInputParams } from "@/actions/input";
 import { getAccuracyByDiff } from "@/lib/diff";
+import { Loader2Icon } from "lucide-react"
 
 type SentenceProps = {
   videoId: string;
@@ -25,13 +26,16 @@ const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const [inputText, setInputText] = React.useState(input[index] || "");
   const [isVisible, setIsVisible] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleInputSubmit = () => {
+    setIsLoading(true);
     startTransition(async () => {
       const text = inputRef.current?.value || "";
       setInputText(text)
       await handleUpdateInput({videoId, email, index, text});
       updateInputCount(getAccuracyByDiff(text, transcript.text));
+      setIsLoading(false);
     })
   };
 
@@ -85,8 +89,10 @@ const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive
         <Button
           type="submit"
           onClick={handleInputSubmit}
+          disabled={isLoading}
+          className=" w-[60px] h-[36px]"
         >
-          {inputText ? "更新" : "提交"}
+          {isLoading ? <Loader2Icon className="animate-spin" /> : inputText ? "更新" : "提交"}
         </Button>
       </div>
     </div>
