@@ -9,7 +9,7 @@ export default function RootLayout({
     <>
       <Navbar />
       <main>
-        <section className='max-w-[1260px] mx-auto p-5 flex flex-col items-center justify-center'>
+        <section className='max-w-[1260px] mx-auto p-2 sm:p-5 flex flex-col items-center justify-center'>
           {children}
         </section>
       </main>
