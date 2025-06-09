@@ -5,39 +5,36 @@ interface WordDiffProps {
   text2: string;
 }
 
-function capitalizeFirstLetter(text: string) {
-  if (text.length === 0) return text;
-  return text.charAt(0).toUpperCase() + text.slice(1);
+function normalize(text: string): string {
+  return text
+    .toLowerCase()
+    .replace("‘", "'")
+    .replace("’", "'")
 }
 
 export default function WordDiff({ text1, text2 }: WordDiffProps) {
-  text2 = text2.replace("’", "'");
-  text1 = capitalizeFirstLetter(text1);
+
+  text1 = normalize(text1);
+  text2 = normalize(text2);
 
   const diff = diffWords(text1, text2);
 
-  if (text1 === "") {
-    return diff.map((part, index) => (
-      <div key={index} className="space-x-1 flex flex-wrap text-lg"></div>
-    ));
-  } else {
-    return (
-      <div className="space-x-1 flex flex-wrap text-lg font-bold ml-10 mb-2">
-        {diff.map((part, index) => (
-          <span
-            key={index}
-            className={`px-1 rounded ${
-              part.added
-                ? "bg-red-200 text-red-800"
-                : part.removed
-                ? "bg-red-200 text-red-800 line-through"
-                : "text-blue-800 dark:text-sky-400"
-            }`}
-          >
-            {part.value}
-          </span>
-        ))}
-      </div>
-    );
-  }
+  return (
+    <div className="flex flex-wrap text-lg font-bold">  
+    {diff.map((part, index) => (
+        <span
+          key={index}
+          className={`${
+            part.added && /^[\p{P}]/u.test(part.value) ? "text-pink-500"
+            : part.removed && /^[\p{P}]/u.test(part.value) ? "text-red-200 line-through"
+            : part.added ? "text-pink-500 ml-2"
+            : part.removed ? "text-red-200 line-through ml-2"
+            : "text-blue-800 dark:text-sky-400 ml-2"
+          }`}
+        >
+          {part.value}
+        </span>
+      ))}
+    </div>
+  );
 }

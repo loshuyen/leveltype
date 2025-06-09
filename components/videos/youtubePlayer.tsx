@@ -16,6 +16,7 @@ import {
 import { Progress } from "@/components/ui/progress"
 import { Play, SkipForward, SkipBack, Pause } from "lucide-react";
 import { upsertInputParams, getInputParams } from "@/actions/input";
+import { calculateAverageAccuracy } from "@/lib/diff";
 
 type youtubePlayerProps = {
   transcript: {
@@ -42,11 +43,14 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
   const [isLooping, setIsLooping] = React.useState(false);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [inputCount, setInputCount] = React.useState(input ? Object.values(JSON.parse(input)).filter(value => value !== "").length : 0);
+  const [averageAccuracyState, setAverageAccuracyState] = React.useState(calculateAverageAccuracy(input, transcript));
 
   const updateInputCount = () => {
     startTransition(async () => {
       const input = await getInput({videoId, email});
+      const averageAccuracy = calculateAverageAccuracy(input, transcript);
       const count = input ? Object.values(JSON.parse(input)).filter(value => value !== "").length : 0
+      setAverageAccuracyState(averageAccuracy);
       setInputCount(count);
     })
   };
@@ -62,19 +66,10 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
     const activeElement = sentenceRefs.current[activeTranscriptIndex];
 
     if (activeElement) {
-      const containerRect = container.getBoundingClientRect();
-      const activeRect = activeElement.getBoundingClientRect();
-
-      const isVisible =
-        activeRect.top >= containerRect.top &&
-        activeRect.bottom <= containerRect.bottom;
-
-      if (!isVisible) {
-        container.scrollTo({
-          top: activeElement.offsetTop - container.offsetTop,
-          behavior: "smooth",
-        });
-      }
+      container.scrollTo({
+        top: activeElement.offsetTop - container.offsetTop,
+        behavior: "smooth",
+      });
     }
   }, [activeTranscriptIndex]);
 
@@ -94,6 +89,8 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
   const opts: YouTubeProps["opts"] = {
     playerVars: {
       autoplay: 0,
+      controls: 0,
+      rel: 0,
     },
   };
 
@@ -135,7 +132,7 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
     if (activeTranscriptIndex === TranscriptIndex &&  isPlaying) {
       playerRef.current.pauseVideo();
     } else {
-        setActiveTranscriptIndex(TranscriptIndex);
+        // setActiveTranscriptIndex(TranscriptIndex);
         playerRef.current.seekTo(transcript[TranscriptIndex].start);
       playerRef.current.playVideo();
     }
@@ -177,15 +174,18 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
   };
 
   return (
-    <div className="w-full p-4 flex flex-col lg:flex-row gap-4">
-      <div className="w-full lg:w-[50%]">
-        <YouTube
-          videoId={videoId}
-          opts={opts}
-          onReady={onPlayerReady}
-          iframeClassName="w-full aspect-video"
-          onStateChange={onStateChange}
-        />
+    <div className="w-full flex flex-col lg:flex-row gap-4">
+      <div className="sticky top-[68px] dark:bg-black bg-white w-full lg:w-[50%]">
+        <div className="w-full aspect-video">
+          <YouTube
+            videoId={videoId}
+            opts={opts}
+            onReady={onPlayerReady}
+            iframeClassName="w-full h-full"
+            className="w-full h-full"
+            onStateChange={onStateChange}
+          />
+        </div>
         <div className="w-full h-15 flex">
           <div className="flex flex-1 items-center">
             <div className="flex items-center space-x-2">
@@ -240,8 +240,11 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
             </Select>
           </div>
         </div>
-        <div className="w-full h-5 flex justify-end items-center font-semibold text-sm">
-          練習進度 {`(${inputCount} / ${transcript.length})`}<Progress value={inputCount / transcript.length * 100} className="w-[20%] ml-3"/>
+        <div className=" w-full h-5 flex justify-between font-semibold text-sm">
+          <div className="flex justify-start items-center">
+            練習進度 {`(${inputCount} / ${transcript.length})`}<Progress value={inputCount / transcript.length * 100} className="w-[60px] ml-3"/>
+          </div>
+          <div>正確率 {averageAccuracyState}%</div>
         </div>
       </div>
       <div
