@@ -19,9 +19,10 @@ type SentenceProps = {
   input: string[];
   handleUpdateInput: ({ videoId, email, index, text }: upsertInputParams) => Promise<void>;
   updateInputCount: (newAccuracy: number) => void;
+  onFocus: () => void;
 };
 
-const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive, ref, isPlaying, input, handleUpdateInput, updateInputCount }: SentenceProps
+const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive, ref, isPlaying, input, handleUpdateInput, updateInputCount, onFocus }: SentenceProps
 ) => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const [inputText, setInputText] = React.useState(input[index] || "");
@@ -85,6 +86,7 @@ const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive
               handleInputSubmit();
             }
           }}
+          onFocus={onFocus}
         />
         <Button
           type="submit"

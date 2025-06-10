@@ -30,6 +30,7 @@ type youtubePlayerProps = {
   upsertInput: ({ videoId, email, index, text }: upsertInputParams) => Promise<void>;
   email: string | null;
   getInput: ({ videoId, email }: getInputParams) => Promise<string>;
+  onFocus: () => void;
 };
 
 const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInput }: youtubePlayerProps) => {
@@ -269,6 +270,10 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
             input={input ? JSON.parse(input) : ""}
             handleUpdateInput={upsertInput}
             updateInputCount={updateInputCount}
+            onFocus={() => {
+              playSegment(index);
+              setActiveTranscriptIndex(index);
+            }}
           />
         ))}
       </div>
