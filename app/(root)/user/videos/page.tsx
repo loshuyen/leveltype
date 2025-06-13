@@ -1,9 +1,9 @@
 import React from 'react'
-import VideoCarousel from '@/components/videos/videoCarousel'
 import { youtubeSources } from '@/constants/videos'
-import { getInputRecordsByUser } from '@/actions/input'
+import { getInputVideoIds } from '@/actions/input'
 import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
+import VideoCardList from '@/components/videos/videoCardList'
 
 type ytVideo = {
     id: string;
@@ -27,11 +27,11 @@ const UserVideos = async () => {
         redirect('/');
     }
   
-    const videoIds = await getInputRecordsByUser(session?.user?.email || '');
-    const ytVideos = videoSources.filter(video => videoIds?.includes(video.id));
+    const videoIds = await getInputVideoIds(session?.user?.email || '');
+    const videos = videoSources.filter(video => videoIds?.includes(video.id));
     
     return (
-        <VideoCarousel ytChannel="My videos" ytVideos={ytVideos}/>
+        <VideoCardList videos={videos}/>
     )
 }
 

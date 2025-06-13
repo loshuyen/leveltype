@@ -42,10 +42,10 @@ export default async function NavBar() {
           ) : (
             <>
               <Button variant="ghost" asChild>
-                <Link href={routes.SIGNIN}>Sign In</Link>
+                <Link href={routes.SIGNIN}>登入</Link>
               </Button>
               <Button asChild>
-                <Link href={routes.SIGNUP}>Sign Up</Link>
+                <Link href={routes.SIGNUP}>註冊</Link>
               </Button>
             </>
           )
@@ -97,13 +97,13 @@ export default async function NavBar() {
                     <Menu />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
+                <DropdownMenuContent>
                   <DropdownMenuGroup>
                     <DropdownMenuItem>
-                      <Link href={routes.SIGNIN}>Sign In</Link>
+                      <Link href={routes.SIGNIN}>登入</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <Link href={routes.SIGNUP}>Sign Up</Link>
+                      <Link href={routes.SIGNUP}>註冊</Link>
                     </DropdownMenuItem>
                     <ModeTogglerMobile />
                   </DropdownMenuGroup>

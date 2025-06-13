@@ -15,12 +15,12 @@ export default function ModeTogglerMobile() {
 
   return (
     <DropdownMenuSub>
-      <DropdownMenuSubTrigger>Toggle Theme</DropdownMenuSubTrigger>
+      <DropdownMenuSubTrigger>外觀</DropdownMenuSubTrigger>
       <DropdownMenuPortal>
         <DropdownMenuSubContent>
-          <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("light")}>淺色</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("dark")}>深色</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("system")}>自動</DropdownMenuItem>
         </DropdownMenuSubContent>
       </DropdownMenuPortal>
     </DropdownMenuSub>

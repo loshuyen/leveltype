@@ -21,7 +21,7 @@ interface Video {
 export default function VideoCarousel({ ytChannel, ytVideos }: { ytChannel: string, ytVideos: Video[] }) {
   return (
     <>
-      <div className="text-lg sm:text-xl font-bold self-start mb-1 sm:mb-2 sm:ml-11">
+      <div className="text-lg sm:text-xl font-bold self-start mb-1 sm:mb-2 sm:ml-11 px-2">
         {ytChannel}
       </div>
       <Carousel className="w-full sm:w-[90%] mb-3 sm:mb-6" 

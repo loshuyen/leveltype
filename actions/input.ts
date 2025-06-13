@@ -55,7 +55,7 @@ export const getInput = async ({ videoId, email }: getInputParams) => {
     return input ? input.text : ""
 }
 
-export const getInputRecordsByUser = async (email: string) => {
+export const getInputVideoIds = async (email: string) => {
     await dbConnect()
 
     const user = await User.findOne({ email })
