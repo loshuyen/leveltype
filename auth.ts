@@ -1,21 +1,31 @@
+import React from "react"
 import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
-import Credentials from "next-auth/providers/credentials"
 import type { Provider } from "next-auth/providers"
+import Resend from "next-auth/providers/resend"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import client from "@/lib/mongodb"
+import { Resend as ResendClient } from "resend"
+import MagicLinkMail from "./components/emails/signInMail"
+import routes from "./constants/routes"
+
 
 const providers: Provider[] = [
-    Credentials({
-        credentials: { password: { label: "Password", type: "password" } },
-        authorize(c) {
-            if (c.password !== "password") return null
-            return {
-                id: "test",
-                name: "Test User",
-                email: "test@example.com",
-            }
-        },
+    Resend({
+      from: `LevelType <${process.env.FROM_EMAIL}>`,
+      sendVerificationRequest: async (params) => {
+        const resend = new ResendClient(process.env.AUTH_RESEND_KEY)
+        const { identifier: to, provider, url } = params
+        const newUrl = new URL(url)
+        newUrl.searchParams.set("callbackUrl", "https://leveltype.site")
+
+        await resend.emails.send({
+          from: provider.from || "",
+          to,
+          subject: '登入 LevelType',
+          react: React.createElement(MagicLinkMail, { magicLink: newUrl.toString() }),
+        });
+      },
     }),
     Google
 ]
@@ -34,7 +44,8 @@ export const providerMap = providers
 export const config = {
     providers,
     pages: {
-      signIn: "/sign-in",
+      signIn: routes.SIGNIN,
+      verifyRequest: routes.VERIFY_REQUEST
     },
     adapter: MongoDBAdapter(client),
   }
