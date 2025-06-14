@@ -12,11 +12,11 @@ const VideoStatus = async ({ videoId }:{ videoId: string}) => {
     const transcript = transcripts[videoId as keyof typeof transcripts];
 
     return (
-    <div className="flex justify-between text-sm">
-      <div className="bg-fuchsia-700 rounded-sm px-1 py-0.5">
+    <div className="flex justify-between text-sm text-white lg:mt-3">
+      <div className="bg-fuchsia-800 rounded-sm px-1 py-0.5">
         練習進度({inputCount}/{transcript.length})
       </div>
-      <div className="bg-sky-700 rounded-sm px-1 py-0.5">
+      <div className="bg-sky-800 rounded-sm px-1 py-0.5">
         正確率{calculateAverageAccuracy(input, transcript)}%
       </div>
     </div>

@@ -50,7 +50,7 @@ const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive
     <div
       key={index}
       className={`w-full p-3 ${
-        isActive ? "dark:bg-gray-800 bg-amber-100" : " hover:bg-amber-100 dark:hover:bg-gray-800"
+        isActive ? "dark:bg-teal-950 bg-amber-100" : " hover:bg-amber-100 dark:hover:bg-teal-950"
       }`}
       ref={ref}
     >
@@ -87,6 +87,7 @@ const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive
             }
           }}
           onFocus={onFocus}
+
         />
         <Button
           type="submit"

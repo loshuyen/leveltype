@@ -30,7 +30,6 @@ type youtubePlayerProps = {
   upsertInput: ({ videoId, email, index, text }: upsertInputParams) => Promise<void>;
   email: string | null;
   getInput: ({ videoId, email }: getInputParams) => Promise<string>;
-  onFocus: () => void;
 };
 
 const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInput }: youtubePlayerProps) => {
@@ -133,7 +132,6 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
     if (activeTranscriptIndex === TranscriptIndex &&  isPlaying) {
       playerRef.current.pauseVideo();
     } else {
-        // setActiveTranscriptIndex(TranscriptIndex);
         playerRef.current.seekTo(transcript[TranscriptIndex].start);
       playerRef.current.playVideo();
     }
@@ -187,7 +185,7 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
             onStateChange={onStateChange}
           />
         </div>
-        <div className="w-full h-15 flex">
+        <div className="w-full h-15 flex p-2">
           <div className="flex flex-1 items-center">
             <div className="flex items-center space-x-2">
               <Switch
@@ -241,7 +239,7 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
             </Select>
           </div>
         </div>
-        <div className=" w-full h-5 flex justify-between font-semibold text-sm">
+        <div className=" w-full h-5 flex justify-between font-semibold text-sm px-2">
           <div className="flex justify-start items-center">
             練習進度 {`(${inputCount} / ${transcript.length})`}<Progress value={inputCount / transcript.length * 100} className="w-[60px] ml-3"/>
           </div>
@@ -249,7 +247,7 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
         </div>
       </div>
       <div
-        className="w-full lg:w-[50%] max-h-[511px] overflow-auto divide-y divide-gray-300 border-gray-300 border-[1px]"
+        className="w-full lg:w-[50%] h-[420px] overflow-auto divide-y divide-gray-300 border-gray-300 border-[1px]"
         ref={containerRef}
       >
         {transcript.map((t, index) => (
