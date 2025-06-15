@@ -1,7 +1,7 @@
 import React, { startTransition } from "react";
 import WordDiff from "./diff";
 import { Button } from "@/components/ui/button";
-import { PlayCircle, PauseCircle, EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { upsertInputParams } from "@/actions/input";
 import { getAccuracyByDiff } from "@/lib/diff";
@@ -22,7 +22,7 @@ type SentenceProps = {
   handleSentenceClick: () => void;
 };
 
-const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive, ref, isPlaying, input, handleUpdateInput, updateInputCount, handleSentenceClick }: SentenceProps
+const Sentence = ({ videoId, email, transcript, index, isActive, ref, input, handleUpdateInput, updateInputCount, handleSentenceClick }: SentenceProps
 ) => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const [inputText, setInputText] = React.useState(input[index] || "");
@@ -55,8 +55,8 @@ const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive
       ref={ref}
       onClick={handleSentenceClick}
     >
+      <p className="text-xs ml-2 mb-2">{formatTime(transcript.start)}</p>
       <div className="flex items-start gap-2 mb-2">
-        <p className="text-xs mt-[6px]">{formatTime(transcript.start)}</p>
         { inputText ? 
           <WordDiff text1={inputText} text2={transcript.text} /> 
           :
@@ -74,9 +74,6 @@ const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive
         }
       </div>
       <div className="flex w-full items-center">
-        <Button variant="ghost" size="icon" onClick={handlePlayClick}>
-          {isPlaying && isActive ? <PauseCircle /> : <PlayCircle />}
-        </Button>
         <Textarea 
           className="font-semibold overflow-hidden resize-none min-h-0 h-auto mr-2" placeholder="Type here..." 
           ref={inputRef}
