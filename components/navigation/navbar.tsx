@@ -99,10 +99,10 @@ export default async function NavBar() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuGroup>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem asChild>
                       <Link href={routes.SIGNIN}>登入</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem asChild>
                       <Link href={routes.SIGNUP}>註冊</Link>
                     </DropdownMenuItem>
                     <ModeTogglerMobile />

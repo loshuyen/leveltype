@@ -2,7 +2,6 @@ import React from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -30,15 +29,6 @@ const UserMenu = ({ user }: {user: User}) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>Hi, {user.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          {/* <DropdownMenuItem>
-            Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-          </DropdownMenuItem> */}
-        </DropdownMenuGroup>
-        {/* <DropdownMenuSeparator /> */}
         <DropdownMenuItem asChild>
             <form
                 action={async () => {
@@ -48,7 +38,7 @@ const UserMenu = ({ user }: {user: User}) => {
             >
               <LogOut />
               <button type="submit">
-                Sign Out
+                登出
               </button>
             </form>
         </DropdownMenuItem>

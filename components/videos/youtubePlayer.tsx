@@ -71,7 +71,7 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
         behavior: "smooth",
       });
     }
-  }, [activeTranscriptIndex]);
+  }, [activeTranscriptIndex, isPlaying]);
 
   const onStateChange: YouTubeProps["onStateChange"] = (event) => {
     if (event.data === 1) {
@@ -128,13 +128,7 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
 
   const playSegment = (TranscriptIndex: number) => {
     if (!playerRef.current) return;
-    
-    if (activeTranscriptIndex === TranscriptIndex &&  isPlaying) {
-      playerRef.current.pauseVideo();
-    } else {
-        playerRef.current.seekTo(transcript[TranscriptIndex].start);
-      playerRef.current.playVideo();
-    }
+    playerRef.current.seekTo(transcript[TranscriptIndex].start);
   };
 
   const togglePlayPause = () => {
@@ -143,6 +137,9 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
     if (isPlaying) {
       playerRef.current.pauseVideo();
     } else {
+      if (activeTranscriptIndex){
+        playerRef.current.seekTo(transcript[activeTranscriptIndex].start);
+      }
       playerRef.current.playVideo();
     }
   };
@@ -152,16 +149,20 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
       activeTranscriptIndex === null ||
       activeTranscriptIndex === transcript.length - 1
     ) {
+      if (!isPlaying){setActiveTranscriptIndex(0);}
       playSegment(0);
     } else {
+      if (!isPlaying){setActiveTranscriptIndex(activeTranscriptIndex + 1);}
       playSegment(activeTranscriptIndex + 1);
     }
   };
 
   const handlePlayBackward = () => {
     if (activeTranscriptIndex === null || activeTranscriptIndex === 0) {
+      if (!isPlaying){setActiveTranscriptIndex(0);}
       playSegment(0);
     } else {
+      if (!isPlaying){setActiveTranscriptIndex(activeTranscriptIndex - 1);}
       playSegment(activeTranscriptIndex - 1);
     }
   };
@@ -173,8 +174,8 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
   };
 
   return (
-    <div className="w-full flex flex-col lg:flex-row gap-4">
-      <div className="sticky top-[68px] dark:bg-black bg-white w-full lg:w-[50%]">
+    <div className="w-full h-[calc(100vh-60px)] lg:h-full flex flex-col lg:flex-row gap-4">
+      <div className="sticky top-[60px] dark:bg-black bg-white w-full lg:w-[50%]">
         <div className="w-full aspect-video">
           <YouTube
             videoId={videoId}
@@ -247,7 +248,7 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
         </div>
       </div>
       <div
-        className="w-full lg:w-[50%] h-[420px] overflow-auto divide-y divide-gray-300 border-gray-300 border-[1px]"
+        className="w-full lg:w-[50%] flex-1 min-h-0 lg:h-[420px] overflow-auto divide-y divide-gray-300 border-gray-300 border-[1px]"
         ref={containerRef}
       >
         {transcript.map((t, index) => (
@@ -268,10 +269,13 @@ const YoutubePlayer = ({ transcript, videoId, input, upsertInput, email, getInpu
             input={input ? JSON.parse(input) : ""}
             handleUpdateInput={upsertInput}
             updateInputCount={updateInputCount}
-            onFocus={() => {
+            handleSentenceClick={
+              () => {
+              if (activeTranscriptIndex === index) return; 
+              if (!isPlaying){setActiveTranscriptIndex(index);}
               playSegment(index);
-              setActiveTranscriptIndex(index);
-            }}
+            }
+            }
           />
         ))}
       </div>

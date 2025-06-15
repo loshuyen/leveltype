@@ -19,10 +19,10 @@ type SentenceProps = {
   input: string[];
   handleUpdateInput: ({ videoId, email, index, text }: upsertInputParams) => Promise<void>;
   updateInputCount: (newAccuracy: number) => void;
-  onFocus: () => void;
+  handleSentenceClick: () => void;
 };
 
-const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive, ref, isPlaying, input, handleUpdateInput, updateInputCount, onFocus }: SentenceProps
+const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive, ref, isPlaying, input, handleUpdateInput, updateInputCount, handleSentenceClick }: SentenceProps
 ) => {
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const [inputText, setInputText] = React.useState(input[index] || "");
@@ -50,9 +50,10 @@ const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive
     <div
       key={index}
       className={`w-full p-3 ${
-        isActive ? "dark:bg-teal-950 bg-amber-100" : " hover:bg-amber-100 dark:hover:bg-teal-950"
+        isActive ? "dark:bg-sky-950 bg-amber-100" : " hover:bg-amber-100 dark:hover:bg-sky-950"
       }`}
       ref={ref}
+      onClick={handleSentenceClick}
     >
       <div className="flex items-start gap-2 mb-2">
         <p className="text-xs mt-[6px]">{formatTime(transcript.start)}</p>
@@ -86,7 +87,6 @@ const Sentence = ({ videoId, email, transcript, index, handlePlayClick, isActive
               handleInputSubmit();
             }
           }}
-          onFocus={onFocus}
 
         />
         <Button

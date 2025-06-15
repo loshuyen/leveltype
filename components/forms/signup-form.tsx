@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -12,6 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { signIn, providerMap } from "@/auth"
 import routes from "@/constants/routes"
+import { LoadingButton } from "../buttons/loadingButton"
 
 type SignUpFormProps = React.ComponentProps<"div"> & {
   searchParams?: { callbackUrl?: string }
@@ -42,13 +42,13 @@ export function SignUpForm({ className, searchParams, ...props }: SignUpFormProp
                     })
                   }}
                 >
-                  <Button
+                  <LoadingButton
                     type="submit"
                     variant="outline"
                     className="w-full"
                   >
                     用 {provider.name} 註冊
-                  </Button>
+                  </LoadingButton>
                 </form>
             )})}
             
@@ -67,11 +67,11 @@ export function SignUpForm({ className, searchParams, ...props }: SignUpFormProp
             >
               <Label htmlFor="email">Email</Label>
               <Input type="email" id="email" name="email" placeholder="Email" required/>
-              <Button
+              <LoadingButton
                 type="submit"
                 variant="outline"
                 className="w-full"
-              >用 Email 註冊</Button>
+              >用 Email 註冊</LoadingButton>
             </form>
             
           </div>
